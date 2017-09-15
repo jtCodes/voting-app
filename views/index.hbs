@@ -1,12 +1,13 @@
 <div class="container">
-    <div class="form">
-    <form>
-        <input class="form-control form-control-lg title" type="text" placeholder="title">
-        <input class="form-control" type="text" placeholder="option">
-        <input class="form-control" type="text" placeholder="option">
-        <input class="form-control" type="text" placeholder="option">
-        <button class="btn btn-primary" id="btn">Submit</button>
+    <form method="POST" action="/polls/createpoll">
+        <input class="form-control form-control-lg title" name="title" type="text" placeholder="title">
+        <input class="form-control" name="option1" type="text" placeholder="option">
+        <input class="form-control" name="option2" type="text" placeholder="option">
+        <input class="form-control" name="option3" type="text" placeholder="option">
+        <div class="more">
+
+        </div>
+        <button type="submit" class="btn btn-primary" id="btn">Submit</button>
     </form>
-    </div>
-    <button type="button" class="btn btn-primary test">Primary</button>
+    <button type="button" class="btn btn-primary test">Add Option</button>
 </div>
