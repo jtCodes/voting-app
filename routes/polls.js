@@ -7,36 +7,44 @@ var router = express.Router();
 
 router.post('/createpoll', function (req, res, next) {
   const db = require('../db/database.js');
-  const pollText = 'INSERT INTO poll(poll_name) VALUES($1)';
-  const pollOptionText = 'INSERT INTO poll_option(option) VALUES';
-  const values = [req.body.title];
-  var optionValues = [];
-  console.log(req.body);
-  db.query(pollText, values, (err, result) => {
+
+  insertInfo(db, req.body);
+  res.send("complete");
+});
+
+function insertInfo(db, body) {
+  const pollText = 'INSERT INTO poll(title) VALUES($1) RETURNING pid';
+  const pollValues = [body.title];
+
+  db.query(pollText, pollValues, (err, result) => {
     if (err) {
       console.log(err.stack);
     } else {
-      console.log("success");
+      console.log("success", result.rows[0].pid);
+      addOptions(db, body, result.rows[0].pid);
     }
   })
-  Object.keys(req.body).forEach(function (key, index) {
+}
+function addOptions(db, body, pid) {
+  const pollOptionText = 'INSERT INTO poll_option(pid,option,option_num) VALUES ($1, $2, $3)';
+  Object.keys(body).forEach(function (key, index) {
     // key: the name of the object key
     // index: the ordinal position of the key within the object 
     console.log(key, index)
     if (index > 0) {
-      optionValues.push(req.body[key])
-      console.log(req.body[key])
+      var optionValues = [];
+
+      optionValues.push(pid, body[key], index);
+
+      db.query(pollOptionText, optionValues, (err, result) => {
+        if (err) {
+          console.log("sql", err.stack);
+        } else {
+          console.log("success");
+        }
+      })
     }
   })
-  console.log(optionValues)
-  db.query(pollOptionText, optionValues, (err, result) => {
-    if (err) {
-      console.log("sql", err.stack);
-    } else {
-      console.log("success");
-    }
-    res.send("complete");
-  })
-});
+}
 
 module.exports = router;
