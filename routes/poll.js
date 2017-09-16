@@ -9,7 +9,11 @@ router.post('/createpoll', function (req, res, next) {
   const db = require('../db/database.js');
 
   insertInfo(db, req.body);
-  res.send("complete");
+  res.redirect('/poll/chart')
+});
+
+router.get('/chart', function (req, res, next) {
+  res.render('chart', {layout: 'chartLayout.hbs'});
 });
 
 function insertInfo(db, body) {
