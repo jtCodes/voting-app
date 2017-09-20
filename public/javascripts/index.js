@@ -8,20 +8,20 @@ $(document).ready(function () {
         txt3.innerHTML = "Text.";
         $(".more").append(txt1);
         opNum += 1;
-        actual +=1;
+        actual += 1;
         console.log("Handler for .click() called.");
     })
 
-    $("input[name='option" + actual+ "']").on('propertychange input', function (e) {
+    $("input[name='option" + actual + "']").on('propertychange input', function (e) {
         var valueChanged = false;
-    
-        if (e.type=='propertychange') {
-            valueChanged = e.originalEvent.propertyName=='value';
+
+        if (e.type == 'propertychange') {
+            valueChanged = e.originalEvent.propertyName == 'value';
         } else {
             valueChanged = true;
         }
         if (valueChanged) {
-           console.log("changes");
+            console.log("changes");
         }
     });
 });

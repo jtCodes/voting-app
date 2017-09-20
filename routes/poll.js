@@ -5,7 +5,11 @@ const $ = require('jQuery')(window);
 var express = require('express');
 var router = express.Router();
 
-router.post('/createpoll', function (req, res, next) {
+router.get('/createpoll', function (req, res, next) {
+  res.render('createPoll');
+});
+
+router.post('/createpoll/post', function (req, res, next) {
   const db = require('../db/database.js');
 
   insertInfo(db, req.body);
@@ -13,7 +17,7 @@ router.post('/createpoll', function (req, res, next) {
 });
 
 router.get('/chart', function (req, res, next) {
-  res.render('chart', {layout: 'chartLayout.hbs'});
+  res.render('chart', { layout: 'chartLayout.hbs' });
 });
 
 function insertInfo(db, body) {

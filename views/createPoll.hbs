@@ -1,0 +1,17 @@
+<div>
+    {{>navbar}}
+</div>
+<h1 class="heading">Create Poll</h1>
+<div class="container">
+    <form method="POST" action="/poll/createpoll/post">
+        <input class="form-control form-control-lg title no-border" name="title" type="text" placeholder="title">
+        <input class="form-control no-border" name="option1" type="text" placeholder="option">
+        <input class="form-control no-border" name="option2" type="text" placeholder="option">
+        <input class="form-control no-border" name="option3" type="text" placeholder="option">
+        <div class="more">
+
+        </div>
+        <button type="button" class="btn btn-outline-info test">Add Option</button>
+        <button type="submit" class="btn btn-outline-primary" id="btn">Submit</button>
+    </form>
+</div>
