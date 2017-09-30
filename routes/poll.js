@@ -35,6 +35,7 @@ router.get('/chart', function (req, res, next) {
   res.render('chart', { layout: 'layouts/chartLayout.hbs' });
 });
 
+//insert poll title and poll options to db
 function insertInfo(body, callback) {
   const pollText = 'INSERT INTO poll(title) VALUES($1) RETURNING pid';
   const pollValues = [body.title];
@@ -50,6 +51,8 @@ function insertInfo(body, callback) {
     }
   })
 }
+
+//insert poll options to db
 function addOptions(body, pid) {
   const pollOptionText = 'INSERT INTO poll_option(pid,option,option_num) VALUES ($1, $2, $3)';
   Object.keys(body).forEach(function (key, index) {
@@ -72,6 +75,7 @@ function addOptions(body, pid) {
   })
 }
 
+//get title of matching pid from db
 function getInfo(callback) {
   const text = 'SELECT title FROM poll WHERE pid = 1';
   let pid = [1];
