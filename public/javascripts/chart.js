@@ -40,7 +40,7 @@ var config = {
         ]
     },
     options: {
-        responsive: true
+        responsive: true,
     }
 };
 

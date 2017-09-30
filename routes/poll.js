@@ -4,23 +4,38 @@ const { window } = new JSDOM(`<!DOCTYPE html>`);
 const $ = require('jQuery')(window);
 var express = require('express');
 var router = express.Router();
+const db = require('../db/database.js');
 
 router.get('/createpoll', function (req, res, next) {
-  res.render('createPoll');
+  res.render('createPoll', { layout: 'layouts/layout.hbs' });
 });
 
 router.post('/createpoll/post', function (req, res, next) {
-  const db = require('../db/database.js');
+  insertInfo(req.body, (pid) => {
+    console.log( "pid", pid)
+    res.redirect('/poll/1');
+  });
+});
 
-  insertInfo(db, req.body);
-  res.redirect('/poll/chart')
+router.get('/1', function (req, res, next) {
+  res.render('vote', { layout: 'layouts/voteLayout.hbs' });
+});
+
+router.get('/1/json', function (req, res, next) {
+  getInfo((result) => {
+    res.send({"result": result })
+  });
+});
+
+router.post('/vote/post', function (req, res, next) {
+  res.send(req.body)
 });
 
 router.get('/chart', function (req, res, next) {
-  res.render('chart', { layout: 'chartLayout.hbs' });
+  res.render('chart', { layout: 'layouts/chartLayout.hbs' });
 });
 
-function insertInfo(db, body) {
+function insertInfo(body, callback) {
   const pollText = 'INSERT INTO poll(title) VALUES($1) RETURNING pid';
   const pollValues = [body.title];
 
@@ -28,12 +43,14 @@ function insertInfo(db, body) {
     if (err) {
       console.log(err.stack);
     } else {
-      console.log("success", result.rows[0].pid);
-      addOptions(db, body, result.rows[0].pid);
+      let pid = result.rows[0].pid;
+      addOptions(body, pid, ()=> {
+        callback(pid);
+      })
     }
   })
 }
-function addOptions(db, body, pid) {
+function addOptions(body, pid) {
   const pollOptionText = 'INSERT INTO poll_option(pid,option,option_num) VALUES ($1, $2, $3)';
   Object.keys(body).forEach(function (key, index) {
     // key: the name of the object key
@@ -55,4 +72,17 @@ function addOptions(db, body, pid) {
   })
 }
 
+function getInfo(callback) {
+  const text = 'SELECT title FROM poll WHERE pid = 1';
+  let pid = [1];
+
+  db.query(text, (err, result) => {
+    if (err) {
+      console.log("sql", err.stack);
+      callback();
+    } else {
+      callback(result.rows[0].title);
+    }
+  })
+}
 module.exports = router;
