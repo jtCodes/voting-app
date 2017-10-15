@@ -58,9 +58,9 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Nodejs](https://nodejs.org/en/docs/) - server framework used
+* [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/) - front end component library used
+* [Heroku](https://www.heroku.com) - for deployment
 
 ## Contributing
 
