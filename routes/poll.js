@@ -12,7 +12,7 @@ router.get('/createpoll', function (req, res, next) {
 
 router.post('/createpoll/post', function (req, res, next) {
   insertPollInfo(req.body, (pid) => {
-    console.log( "pid", pid)
+    console.log("pid", pid)
     res.redirect('/poll/1/')
   });
 });
@@ -22,8 +22,8 @@ router.get('/1', function (req, res, next) {
 });
 
 router.get('/1/json', function (req, res, next) {
-  getInfo(1, (result) => {
-    res.send({"result": result })
+  getInfo(1, (title, options) => {
+    res.send({ "title": title, "options":options })
   });
 });
 
@@ -76,14 +76,20 @@ function addOptions(body, pid) {
 
 //get title of matching pid from db
 function getInfo(pid, callback) {
-  const text = 'SELECT title FROM poll WHERE pid =' + pid;
+  const titleText = 'SELECT title FROM poll WHERE pid =' + pid;
+  const optionText = 'SELECT * FROM poll_option WHERE pid =' + pid;
 
-  db.query(text, (err, result) => {
+  db.query(titleText, (err, titleRes) => {
     if (err) {
       console.log("sql", err.stack);
-      callback();
     } else {
-      callback(result.rows[0].title);
+      db.query(optionText, (err, optionRes) => {
+        if (err) {
+          console.log("sql", err.stack);
+        } else {
+          callback(titleRes.rows[0].title, optionRes.rows);
+        }
+      })
     }
   })
 }
