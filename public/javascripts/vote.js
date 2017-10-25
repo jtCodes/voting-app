@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 function fetch() {
     $.ajax({
-        url: "http://localhost:3000/poll/1/json",
+        url: "https://anonvote.herokuapp.com/poll/1/json",
         type: 'GET',
         success: function (res) {
             console.log(res);
