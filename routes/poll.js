@@ -1,7 +1,7 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const { window } = new JSDOM(`<!DOCTYPE html>`);
-const $ = require('jQuery')(window);
+const $ = require('jquery')(window);
 var express = require('express');
 var router = express.Router();
 const db = require('../db/database.js');
