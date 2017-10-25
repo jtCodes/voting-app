@@ -11,9 +11,9 @@ router.get('/createpoll', function (req, res, next) {
 });
 
 router.post('/createpoll/post', function (req, res, next) {
-  insertInfo(req.body, (pid) => {
+  insertPollInfo(req.body, (pid) => {
     console.log( "pid", pid)
-    res.redirect('/poll/1');
+    res.redirect('/poll/1/')
   });
 });
 
@@ -22,7 +22,7 @@ router.get('/1', function (req, res, next) {
 });
 
 router.get('/1/json', function (req, res, next) {
-  getInfo((result) => {
+  getInfo(1, (result) => {
     res.send({"result": result })
   });
 });
@@ -36,7 +36,7 @@ router.get('/chart', function (req, res, next) {
 });
 
 //insert poll title and poll options to db
-function insertInfo(body, callback) {
+function insertPollInfo(body, callback) {
   const pollText = 'INSERT INTO poll(title) VALUES($1) RETURNING pid';
   const pollValues = [body.title];
 
@@ -45,9 +45,8 @@ function insertInfo(body, callback) {
       console.log(err.stack);
     } else {
       let pid = result.rows[0].pid;
-      addOptions(body, pid, ()=> {
-        callback(pid);
-      })
+      addOptions(body, pid)
+      callback(pid)
     }
   })
 }
@@ -76,9 +75,8 @@ function addOptions(body, pid) {
 }
 
 //get title of matching pid from db
-function getInfo(callback) {
-  const text = 'SELECT title FROM poll WHERE pid = 1';
-  let pid = [1];
+function getInfo(pid, callback) {
+  const text = 'SELECT title FROM poll WHERE pid =' + pid;
 
   db.query(text, (err, result) => {
     if (err) {
