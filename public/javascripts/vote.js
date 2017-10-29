@@ -9,7 +9,7 @@ function fetch(pollID) {
     const local = 'http://localhost:3000/'
     const deploy = 'https://anonvote.herokuapp.com/'
     $.ajax({
-        url: local + "api/poll" + pollID,
+        url: deploy + "api/poll" + pollID,
         type: 'GET',
         success: function (res) {
             console.log(res);
