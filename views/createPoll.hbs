@@ -3,11 +3,11 @@
 </div>
 <h1 class="heading">Create Poll</h1>
 <div class="container">
-    <form method="POST" action="/poll/createpoll/post">
-        <input class="form-control form-control-lg title no-border" name="title" type="text" placeholder="title">
-        <input class="form-control no-border" name="option1" type="text" placeholder="option">
-        <input class="form-control no-border" name="option2" type="text" placeholder="option">
-        <input class="form-control no-border" name="option3" type="text" placeholder="option">
+    <form method="POST" action="/createpoll/post">
+        <input class="form-control form-control-lg title no-border" name="title" type="text" placeholder="title" required>
+        <input class="form-control no-border" name="option1" type="text" placeholder="option" required>
+        <input class="form-control no-border" name="option2" type="text" placeholder="option" required>
+        <input class="form-control no-border" name="option3" type="text" placeholder="option" required>
         <div class="more">
 
         </div>

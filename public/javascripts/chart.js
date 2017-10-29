@@ -16,6 +16,7 @@ var config = {
     data: {
         datasets: [{
             data: [
+                //get from poll_vote
                 randomScalingFactor(),
                 randomScalingFactor(),
                 randomScalingFactor(),
@@ -37,6 +38,7 @@ var config = {
             "Yellow",
             "Green",
             "Blue"
+            //get from poll_option
         ]
     },
     options: {
