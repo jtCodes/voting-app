@@ -2,6 +2,30 @@ var randomScalingFactor = function () {
     return Math.round(Math.random() * 100);
 };
 
+$(document).ready(function () {
+    var url = window.location.href
+    var index = url.lastIndexOf("/");
+    var pollID = url.substr(index)
+    fetchPollInfo(pollID)
+})
+
+//fetch the poll title and options corresponding to the poll id
+function fetchPollInfo(pollID) {
+    const local = 'http://localhost:3000/'
+    const deploy = 'https://anonvote.herokuapp.com/'
+    $.ajax({
+        url: local + "api/poll" + pollID,
+        type: 'GET',
+        success: function (res) {
+            console.log(res);
+            console.log(res.options[0])
+            console.log(res.options[0].oid)
+            console.log(res.options.length)
+            console.log("sucess");
+        }
+    });
+}
+
 window.chartColors = {
     red: 'rgb(255, 99, 132)',
     orange: 'rgb(255, 159, 64)',

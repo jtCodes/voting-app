@@ -21,9 +21,9 @@ router.post('/vote/post', function (req, res, next) {
     var url = req.headers.referer
     var index = url.lastIndexOf("/");
     var pollID = url.substr(index)
-
+    
     const text = 'INSERT INTO poll_vote (poll_id, option_id) VALUES ($1, $2)';
-    let values = [parseInt(req.body.option),parseInt(pollID.substr(1))]
+    let values = [parseInt(pollID.substr(1)), parseInt(req.body.option)]
 
     db.query(text, values, (err, result) => {
         if (err) {
