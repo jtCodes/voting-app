@@ -14,14 +14,20 @@ function fetchPollInfo(pollID) {
     const local = 'http://localhost:3000/'
     const deploy = 'https://anonvote.herokuapp.com/'
     $.ajax({
-        url: local + "api/poll" + pollID,
+        url: local + "api/vote/info" + pollID,
         type: 'GET',
         success: function (res) {
-            console.log(res);
-            console.log(res.options[0])
-            console.log(res.options[0].oid)
-            console.log(res.options.length)
-            console.log("sucess");
+            //console.log(res);
+           // console.log(res.voteInfo);
+           // console.log(res.voteInfo[0].tally);
+           // console.log(config.data.datasets.data)
+            config.data.datasets[0].data = []
+            config.data.labels = []
+            for (i = 0; i<res.voteInfo.length; i++) {
+                config.data.datasets[0].data.push(res.voteInfo[i].tally)
+                config.data.labels.push(res.voteInfo[i].option)
+            }
+            window.myPie.update();
         }
     });
 }
@@ -82,7 +88,7 @@ document.getElementById('randomizeData').addEventListener('click', function () {
         });
     });
 
-    window.myPie.update();
+  //  window.myPie.update();
 });
 
 var colorNames = Object.keys(window.chartColors);
@@ -107,5 +113,5 @@ document.getElementById('addDataset').addEventListener('click', function () {
 
 document.getElementById('removeDataset').addEventListener('click', function () {
     config.data.datasets.splice(0, 1);
-    window.myPie.update();
+   // window.myPie.update();
 });
