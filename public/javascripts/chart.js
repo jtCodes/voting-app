@@ -6,13 +6,15 @@ $(document).ready(function () {
     var url = window.location.href
     var index = url.lastIndexOf("/");
     var pollID = url.substr(index)
-    fetchPollInfo(pollID)
+    createChart(pollID)
 })
 
-//fetch the poll title and options corresponding to the poll id
-function fetchPollInfo(pollID) {
+//create chart with info from db
+function createChart(pollID) {
     const local = 'http://localhost:3000/'
     const deploy = 'https://anonvote.herokuapp.com/'
+
+    //fetch the info
     $.ajax({
         url: local + "api/vote/info" + pollID,
         type: 'GET',

@@ -10,4 +10,8 @@ router.get('/:id', function (req, res, next) {
   res.render('vote', { layout: 'layouts/voteLayout.hbs' });
 });
 
+router.get('/chart/:id', function (req, res, next) {
+  res.render('chart', { layout: 'layouts/chartLayout.hbs' });
+});
+
 module.exports = router;

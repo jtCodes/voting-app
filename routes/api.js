@@ -13,10 +13,6 @@ router.get('/poll/:id', function (req, res, next) {
     });
 });
 
-router.get('/chart/:id', function (req, res, next) {
-    res.render('chart', { layout: 'layouts/chartLayout.hbs' });
-});
-
 router.get('/vote/info/:id', function (req, res, next) {
     var id = req.params.id;
     getVoteInfo(id, (voteInfo) => {
@@ -29,7 +25,7 @@ router.post('/vote/post', function (req, res, next) {
     var index = url.lastIndexOf("/");
     var pollID = url.substr(index)
     
-    const text = 'INSERT INTO poll_vote (poll_id, option_id) VALUES ($1, $2)';
+    const text = 'INSERT INTO poll_vote (pid, oid) VALUES ($1, $2)';
     let values = [parseInt(pollID.substr(1)), parseInt(req.body.option)]
 
     db.query(text, values, (err, result) => {
@@ -37,7 +33,7 @@ router.post('/vote/post', function (req, res, next) {
             console.log("sql", err.stack);
         } else {
             console.log("success");
-            res.redirect('/api/chart' + pollID)
+            res.redirect('/poll/chart' + pollID)
         }
     })
 });
@@ -49,8 +45,6 @@ router.post('/vote/post', function (req, res, next) {
 function getInfo(pid, callback) {
     const titleText = 'SELECT title FROM poll WHERE pid =' + pid;
     const optionText = 'SELECT * FROM poll_option WHERE pid =' + pid;
-    const voteInfo = 'SELECT title, poll_option.option, poll_option.pid FROM poll, poll_option, poll_vote WHERE poll_option.pid =' + 
-    pid + 'AND poll_vote.poll_id =' + pid + 'AND poll.pid = poll_vote.poll_id GROUP BY poll.title, poll_option.option, poll_option.pid'
 
     db.query(titleText, (err, titleRes) => {
         if (err) {
@@ -68,10 +62,11 @@ function getInfo(pid, callback) {
 }
 
 //TODO: FIX THE DB MESS - NAMING, STUCTURING
+// mayber don't need oid
 
 function getVoteInfo(pid, callback) {
-    const voteInfo = 'SELECT poll_vote.option_id, title, poll_option.option, poll_vote.poll_id, COUNT(poll_vote.option_id) AS tally FROM ' + 
-    'poll, poll_option, poll_vote WHERE poll_vote.poll_id =' + pid + 'AND poll_option.pid =' + pid + 'AND poll.pid = poll_vote.poll_id AND poll_vote.option_id = poll_option.option_num GROUP BY title, poll_option.option, poll_vote.poll_id, poll_vote.option_id ORDER BY option_id ASC;'
+    const voteInfo = 'SELECT poll_vote.oid, title, poll_option.option, poll_vote.pid, COUNT(poll_vote.oid) AS tally FROM ' + 
+    'poll, poll_option, poll_vote WHERE poll_vote.pid =' + pid + 'AND poll_option.pid =' + pid + 'AND poll.pid = poll_vote.pid AND poll_vote.oid = poll_option.option_num GROUP BY title, poll_option.option, poll_vote.pid, poll_vote.oid ORDER BY poll_vote.oid ASC;'
 
     db.query(voteInfo, (err, res) => {
         if (err) {
