@@ -1,7 +1,3 @@
-var randomScalingFactor = function () {
-    return Math.round(Math.random() * 100);
-};
-
 $(document).ready(function () {
     var url = window.location.href
     var index = url.lastIndexOf("/");
@@ -13,6 +9,21 @@ $(document).ready(function () {
 function createChart(pollID) {
     const local = 'http://localhost:3000/'
     const deploy = 'https://anonvote.herokuapp.com/'
+
+    var config = {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: [],
+                backgroundColor: [],
+                label: 'Dataset 1'
+            }],
+            labels: []
+        },
+        options: {
+            responsive: true,
+        }
+    };
 
     //fetch the info
     $.ajax({
@@ -26,10 +37,12 @@ function createChart(pollID) {
             config.data.datasets[0].data = []
             config.data.labels = []
             for (i = 0; i<res.voteInfo.length; i++) {
-                config.data.datasets[0].data.push(res.voteInfo[i].tally)
-                config.data.labels.push(res.voteInfo[i].option)
+                config.data.datasets[0].data.push(res.voteInfo[i].tally);
+                config.data.datasets[0].backgroundColor.push(randomColor());
+                config.data.labels.push(res.voteInfo[i].option);
             }
-            window.myPie.update();
+            var ctx = document.getElementById("chart-area").getContext("2d");
+            var myPie = new Chart(ctx, config);
         }
     });
 }
@@ -43,77 +56,14 @@ window.chartColors = {
     purple: 'rgb(153, 102, 255)',
     grey: 'rgb(201, 203, 207)'
 };
-var config = {
-    type: 'pie',
-    data: {
-        datasets: [{
-            data: [
-                //get from poll_vote
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-                randomScalingFactor(),
-            ],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-            ],
-            label: 'Dataset 1'
-        }],
-        labels: [
-            "Red",
-            "Orange",
-            "Yellow",
-            "Green",
-            "Blue"
-            //get from poll_option
-        ]
-    },
-    options: {
-        responsive: true,
-    }
+
+var dynamicColors = function() {
+    var r = Math.floor(Math.random() * 255);
+    var g = Math.floor(Math.random() * 255);
+    var b = Math.floor(Math.random() * 255);
+    return "rgb(" + r + "," + g + "," + b + ")";
+ };
+
+var randomScalingFactor = function () {
+    return Math.round(Math.random() * 100);
 };
-
-window.onload = function () {
-    var ctx = document.getElementById("chart-area").getContext("2d");
-    window.myPie = new Chart(ctx, config);
-};
-
-document.getElementById('randomizeData').addEventListener('click', function () {
-    config.data.datasets.forEach(function (dataset) {
-        dataset.data = dataset.data.map(function () {
-            return randomScalingFactor();
-        });
-    });
-
-  //  window.myPie.update();
-});
-
-var colorNames = Object.keys(window.chartColors);
-document.getElementById('addDataset').addEventListener('click', function () {
-    var newDataset = {
-        backgroundColor: [],
-        data: [],
-        label: 'New dataset ' + config.data.datasets.length,
-    };
-
-    for (var index = 0; index < config.data.labels.length; ++index) {
-        newDataset.data.push(randomScalingFactor());
-
-        var colorName = colorNames[index % colorNames.length];;
-        var newColor = window.chartColors[colorName];
-        newDataset.backgroundColor.push(newColor);
-    }
-
-    config.data.datasets.push(newDataset);
-    window.myPie.update();
-});
-
-document.getElementById('removeDataset').addEventListener('click', function () {
-    config.data.datasets.splice(0, 1);
-   // window.myPie.update();
-});
