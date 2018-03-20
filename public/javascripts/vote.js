@@ -7,10 +7,11 @@ $(document).ready(function () {
 
 //fetch the poll title and options corresponding to the poll id
 function fetchPollInfo(pollID) {
-    const local = 'http://localhost:3000/'
-    const deploy = 'https://anonvote.herokuapp.com/'
+    const host = location.protocol + '//' + location.host + '/'
+    //const deploy = 'https://anonvote.herokuapp.com/'
+    console.log(host + "api/poll" + pollID)
     $.ajax({
-        url: local + "api/poll" + pollID,
+        url: host + "api/poll" + pollID,
         type: 'GET',
         success: function (res) {
             console.log(res);

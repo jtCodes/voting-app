@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var opNum = 4;
     var actual = 3;
-    $('.test').click(function () {
+    $('.add').click(function () {
         var txt1 = "<input class='form-control no-border' name='option" + opNum + "'type='text' placeholder='option' required>";               // Create element with HTML  
         var txt2 = $("<p></p>").text("Text.");   // Create with jQuery
         var txt3 = document.createElement("p");  // Create with DOM
@@ -9,7 +9,6 @@ $(document).ready(function () {
         $(".more").append(txt1);
         opNum += 1;
         actual += 1;
-        console.log("Handler for .click() called.");
     })
 
     $("input[name='option" + actual + "']").on('propertychange input', function (e) {
