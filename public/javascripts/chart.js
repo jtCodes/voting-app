@@ -7,8 +7,7 @@ $(document).ready(function () {
 
 //create chart with info from db
 function createChart(pollID) {
-    const local = 'http://localhost:3000/'
-    const deploy = 'https://anonvote.herokuapp.com/'
+    const host = location.protocol + '//' + location.host + '/'
 
     var config = {
         type: 'pie',
@@ -27,7 +26,7 @@ function createChart(pollID) {
 
     //fetch the info
     $.ajax({
-        url: local + "api/vote/info" + pollID,
+        url: host + "api/vote/info" + pollID,
         type: 'GET',
         success: function (res) {
             //console.log(res);
