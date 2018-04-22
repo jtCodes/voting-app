@@ -2,7 +2,7 @@
 
 Create, share, vote.
 
-### Installation
+## Installation
 
 #### `Step 1` - clone the repo
   
