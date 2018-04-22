@@ -12,7 +12,6 @@ router.get('/', function (req, res, next) {
 
 router.post('/post', function (req, res, next) {
     insertPollInfo(req.body, (pid) => {
-        console.log("pid", pid)
         res.redirect('/poll/' + pid)
     });
 });

@@ -1,13 +1,15 @@
 $(document).ready(function () {
-    var url = window.location.href
+    "use strict";
+    var url = window.location.href;
     var index = url.lastIndexOf("/");
-    var pollID = url.substr(index)
+    var pollID = url.substr(index);
     createChart(pollID)
 })
 
 //create chart with info from db
 function createChart(pollID) {
-    const host = location.protocol + '//' + location.host + '/'
+    "use strict";
+    const host = location.protocol + '//' + location.host + '/';
 
     var config = {
         type: 'pie',
@@ -29,13 +31,13 @@ function createChart(pollID) {
         url: host + "api/vote/info" + pollID,
         type: 'GET',
         success: function (res) {
-            //console.log(res);
+        console.log(res);
            // console.log(res.voteInfo);
            // console.log(res.voteInfo[0].tally);
            // console.log(config.data.datasets.data)
             config.data.datasets[0].data = []
             config.data.labels = []
-            for (i = 0; i<res.voteInfo.length; i++) {
+            for (let i = 0; i<res.voteInfo.length; i++) {
                 config.data.datasets[0].data.push(res.voteInfo[i].tally);
                 config.data.datasets[0].backgroundColor.push(randomColor());
                 config.data.labels.push(res.voteInfo[i].option);
