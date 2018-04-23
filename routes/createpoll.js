@@ -26,11 +26,15 @@ function insertPollInfo(body, callback) {
             console.log(err.stack);
         } else {
             let pid = result.rows[0].pid;
-            //addOptions(body, pid)
+            addOptions(body, pid)
+            /* 
+            TODO:
+
             setTimeout(function() {
                 addOptions(body, pid)
             }, 10000);
             console.log("success1")
+            */
             callback(pid)
         }
     })
