@@ -31,16 +31,19 @@ CREATE TABLE
 CREATE TABLE
 anonvotedb=# \q
 ```
+
 #### `Step 3` - cd back to the repo
 
 ```bash
 $ cd ..
 ```
+
 #### `Step 4` - install dependencies
 
 ```bash
 $ npm install
 ```
+
 #### `Step 5` - run application
 
 ```bash
