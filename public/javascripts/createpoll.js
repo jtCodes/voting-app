@@ -3,7 +3,7 @@ $(document).ready(function() {
   var actual = 3;
   $(".add").click(function() {
     var txt1 =
-      "<input class='form-control no-border' name='option" +
+      "<input class='form-control no-border create-poll-box' name='option" +
       opNum +
       "'type='text' placeholder='option' required>"; // Create element with HTML
     var txt2 = $("<p></p>").text("Text."); // Create with jQuery
