@@ -37,12 +37,6 @@ anonvotedb=# \q
 $ cd ..
 ```
 
-#### `Step 5` - run application
-
-```bash
-$ npm run start
-```
-
 #### `Step 4` - run application
 
 ```bash
