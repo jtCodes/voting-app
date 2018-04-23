@@ -2,6 +2,9 @@
 
 Create, share, vote.
 
+## Prerequisites
+Have PostgreSQL server & psql command line ready. 
+
 ## Installation
 
 #### `Step 1` - clone the repo
@@ -10,16 +13,35 @@ Create, share, vote.
 $ git clone https://github.com/jtCodes/voting-app
 ```
 
-#### `Step 2` - cd in the repo
+#### `Step 2` - cd to db folder and create the postgressql database
 
 ```bash
-$ cd voting-app
+$ cd voting-app/db
+$ psql
+$ psql
+(10.3, server 9.6.8)
+Type "help" for help.
+
+JT=# \i createdb.sql
+DROP DATABASE
+CREATE DATABASE
+psql (10.3, server 9.6.8)
+You are now connected to database "anonvotedb" as user "JT".
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+anonvotedb=# \q
+```
+#### `Step 3` - cd back to the repo
+
+```bash
+$ cd ..
 ```
 
-#### `Step 3` - install dependencies
+#### `Step 5` - run application
 
 ```bash
-$ npm install
+$ npm run start
 ```
 
 #### `Step 4` - run application
