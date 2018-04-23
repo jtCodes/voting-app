@@ -21,11 +21,11 @@ $ psql
 (10.3, server 9.6.8)
 Type "help" for help.
 
-JT=# \i createdb.sql
+(user)=# \i createdb.sql
 DROP DATABASE
 CREATE DATABASE
 psql (10.3, server 9.6.8)
-You are now connected to database "anonvotedb" as user "JT".
+You are now connected to database "anonvotedb" as user "(user)".
 CREATE TABLE
 CREATE TABLE
 CREATE TABLE
