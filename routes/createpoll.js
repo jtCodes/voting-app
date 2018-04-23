@@ -26,7 +26,11 @@ function insertPollInfo(body, callback) {
             console.log(err.stack);
         } else {
             let pid = result.rows[0].pid;
-            addOptions(body, pid)
+            //addOptions(body, pid)
+            setTimeout(function() {
+                addOptions(body, pid)
+            }, 10000);
+            console.log("success1")
             callback(pid)
         }
     })
@@ -38,10 +42,8 @@ function addOptions(body, pid) {
     Object.keys(body).forEach(function (key, index) {
         // key: the name of the object key
         // index: the ordinal position of the key within the object 
-        console.log(key, index)
         if (index > 0) {
             var optionValues = [];
-
             optionValues.push(pid, body[key], index);
 
             db.query(pollOptionText, optionValues, (err, result) => {
