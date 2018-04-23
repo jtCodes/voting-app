@@ -18,7 +18,6 @@ $ git clone https://github.com/jtCodes/voting-app
 ```bash
 $ cd voting-app/db
 $ psql
-$ psql
 (10.3, server 9.6.8)
 Type "help" for help.
 
