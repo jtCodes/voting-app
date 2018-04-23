@@ -36,8 +36,12 @@ anonvotedb=# \q
 ```bash
 $ cd ..
 ```
+#### `Step 4` - install dependencies
 
-#### `Step 4` - run application
+```bash
+$ npm install
+```
+#### `Step 5` - run application
 
 ```bash
 $ npm run start
