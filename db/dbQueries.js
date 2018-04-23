@@ -65,5 +65,47 @@ module.exports = {
         callback();
       }
     });
+  },
+
+  /**
+   *   Insert poll title, options into db
+   *   @param {int} body - poll id retrieved from the url in the form '/pid'
+   *   @param {function()} callback - a callback to run
+   **/
+  insertPollInfo: function(body, callback) {
+    const pollText = "INSERT INTO poll(title) VALUES($1) RETURNING pid";
+    const pollOptionText =
+      "INSERT INTO poll_option(pid,option,option_num) VALUES ($1, $2, $3)";
+    const pollValues = [body.title];
+
+    db.query(pollText, pollValues, (err, result) => {
+      if (err) {
+        console.log("sql", err.stack);
+      } else {
+        let pid = result.rows[0].pid;
+
+        // problem: foreach does a query for each key, calling callback each time!
+        // foreach loop is not async, db query is async
+        let allQueriesPromise = Promise.all(
+          Object.keys(body).map(function(key, index) {
+            // key: the name of the object key
+            // index: the ordinal position of the key within the object
+            if (index > 0) {
+              var optionValues = [];
+              optionValues.push(pid, body[key], index);
+
+              db.query(pollOptionText, optionValues, (err, result) => {
+                if (err) {
+                  console.log("sql", err.stack);
+                } else {
+                  console.log("success");
+                }
+              });
+            }
+          })
+        );
+        allQueriesPromise.then(() => callback(pid));
+      }
+    });
   }
 };
