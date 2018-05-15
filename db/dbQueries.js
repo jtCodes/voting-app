@@ -34,15 +34,20 @@ module.exports = {
    **/
   getVoteInfo: function(pid, callback) {
     const voteInfoQuery =
-      "SELECT poll_vote.oid, title, poll_option.option, poll_vote.pid, COUNT(poll_vote.oid) AS tally FROM " +
-      "poll, poll_option, poll_vote WHERE poll_vote.pid = $1 AND poll_option.pid = $2 AND poll.pid = poll_vote.pid AND " +
-      "poll_vote.oid = poll_option.option_num GROUP BY title, poll_option.option, poll_vote.pid, poll_vote.oid ORDER BY poll_vote.oid ASC;";
+      "SELECT poll_vote.oid, title, poll_option.option, poll_vote.pid, COUNT(poll_vote.oid) " + 
+      "AS tally FROM poll, poll_option, poll_vote " + 
+      "WHERE poll_vote.pid = $1 " + 
+      "AND poll_option.pid = $2 " + 
+      "AND poll.pid = poll_vote.pid " + 
+      "AND poll_vote.oid = poll_option.option_num " + 
+      "GROUP BY title, poll_option.option, poll_vote.pid, poll_vote.oid " + 
+      "ORDER BY poll_vote.oid ASC;";
+      
     let values = [pid, pid];
     db.query(voteInfoQuery, values, (err, res) => {
       if (err) {
         console.log("sql", err.stack);
       } else {
-        console.log(res.rows);
         callback(res.rows);
       }
     });
@@ -69,8 +74,8 @@ module.exports = {
 
   /**
    *   Insert poll title, options into db
-   *   @param {int} body - poll id retrieved from the url in the form '/pid'
-   *   @param {function()} callback - a callback to run
+   *   @param {int} body - body of the post request containing the title and poll options
+   *   @param {function(pid)} callback - call after all poll options are inserted
    **/
   insertPollInfo: function(body, callback) {
     const pollText = "INSERT INTO poll(title) VALUES($1) RETURNING pid";
@@ -84,9 +89,10 @@ module.exports = {
       } else {
         let pid = result.rows[0].pid;
 
+        // callback function depends on all queries being done, so wrap around promise all to know when
         // problem: foreach does a query for each key, calling callback each time!
         // foreach loop is not async, db query is async
-        let allQueriesPromise = Promise.all(
+        let insertPollOptionsPromises = Promise.all(
           Object.keys(body).map(function(key, index) {
             // key: the name of the object key
             // index: the ordinal position of the key within the object
@@ -104,7 +110,7 @@ module.exports = {
             }
           })
         );
-        allQueriesPromise.then(() => callback(pid));
+        insertPollOptionsPromises.then(() => callback(pid));
       }
     });
   }
