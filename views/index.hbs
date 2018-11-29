@@ -1,12 +1,36 @@
 <div>
     {{>navbar}}
 </div>
-<div class="jumbotron vertical-center">
-    <h1 class="display-3">Hello!</h1>
-    <p class="lead">Anonvote allows you to create polls anonomously.</p>
-    <hr class="my-4">
-    <p></p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="/createpoll" role="button">Create Poll</a>
-    </p>
+
+<div class="container index-heading-container">
+    <h2 class="index-heading">CREATE, SHARE, VOTE</h2>
+    <hr class="my-4 title-my-4">
+</div>
+
+<div class="container create-poll-container">
+    <form method="POST" action="/createpoll/post">
+        <div class="create-poll-wrap">
+            <p class="lead index-create-poll-h">Create Poll</p>
+            <input class="form-control form-control-lg title no-border create-poll-box" name="title" type="text"
+                placeholder="title" required>
+            <input id="option1" class="form-control no-border create-poll-box" name="option1" type="text" placeholder="option"
+                required>
+            <input id="option2" class="form-control no-border create-poll-box" name="option2" type="text" placeholder="option"
+                required>
+            <input id="option3" class="form-control no-border create-poll-box" name="option3" type="text" placeholder="option"
+                onfocus="addNewOptionBox()" onfocusout="isEmpty(this)" required>
+            <div class="more">
+
+            </div>
+
+            <div class="poll-image-container row">
+
+            </div>
+            <div>
+                <button type="button" class="btn btn-outline-info add-option-btn"><span class="fui-plus"></span></button>
+                <button type="button" class="btn btn-outline-info add-img-btn"><span class="fui-image"></span></button>
+                <button type="submit" class="btn btn-outline-primary submit-poll-btn" id="btn"><span class="fui-check"></span></button>
+            </div>
+        </div>
+    </form>
 </div>

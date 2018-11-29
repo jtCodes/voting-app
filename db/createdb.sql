@@ -20,7 +20,7 @@ CREATE TABLE poll_option
     option VARCHAR NOT NULL,
     option_num INT NOT NULL
 );
-CREATE TABLE vote
+CREATE TABLE poll_vote
 (
     oid INT NOT NULL,
     pid INT NOT NULL,

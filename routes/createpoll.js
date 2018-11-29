@@ -8,7 +8,14 @@ const db = require("../db/database.js");
 const dbq = require("../db/dbQueries");
 
 router.get("/", (req, res, next) => {
-  res.render("createPoll", { layout: "layouts/layout.hbs" });
+  res.locals = {
+    routeActive: {
+      index: false,
+      createpoll: true,
+      trending: false
+    }
+  };
+  res.render("createPoll", { layout: "layouts/indexLayout.hbs" });
 });
 
 router.post("/post", (req, res, next) => {

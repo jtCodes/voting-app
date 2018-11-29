@@ -1,23 +1,12 @@
 var opNum = 4;
-var actual = 3;
+var actualOpNum = 3;
 
 $(document).ready(function() {
-  $(".add").click(function() {
-    var txt1 =
-      "<input class='form-control no-border create-poll-box' name='option" +
-      opNum +
-      "' id='option" +
-      opNum +
-      "'type='text' placeholder='option' required>"; // Create element with HTML
-    var txt2 = $("<p></p>").text("Text."); // Create with jQuery
-    var txt3 = document.createElement("p"); // Create with DOM
-    txt3.innerHTML = "Text.";
-    $(".more").append(txt1);
-    opNum += 1;
-    actual += 1;
+  $(".add-option-btn").click(function() {
+    addNewOptionBox();
   });
 
-  $("input[name='option" + actual + "']").on("propertychange input", function(
+  $("input[name='option" + actualOpNum + "']").on("propertychange input", function(
     e
   ) {
     var valueChanged = false;
@@ -30,6 +19,10 @@ $(document).ready(function() {
     if (valueChanged) {
       console.log("changes");
     }
+  });
+
+  $(".add-img-btn").click(function() {
+    addImg();
   });
 });
 
@@ -45,7 +38,7 @@ function addNewOptionBox() {
   txt3.innerHTML = "Text.";
   $(".more").append(txt1);
   opNum += 1;
-  actual += 1;
+  actualOpNum += 1;
 }
 
 function isEmpty(e) {
@@ -64,6 +57,12 @@ function deleteLastOptionBox(name) {
   let nextOption = "option" + (clickedOptionNum + 1);
   console.log(nextOption);
   opNum -= 1;
-  actual -= 1;
+  actualOpNum -= 1;
   document.getElementById(nextOption).remove();
+}
+
+function addImg() {
+  var imgHtml = '<img src="https://i.kym-cdn.com/photos/images/original/001/385/566/974.png" alt="example-image" class="img-rounded img-responsive poll-image">';
+  $(".poll-image-container").append(imgHtml);
+  console.log("add imng");
 }

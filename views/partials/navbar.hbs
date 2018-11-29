@@ -1,24 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+<nav class="navbar navbar-inverse navbar-embossed navbar-expand-lg" style="border-radius:0px;">
+  <a class="navbar-brand" href="/">Quick Poll</a>
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse-01">
+    <span class="fui-list"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbar-collapse-01">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item {{#if routeActive.index}}active{{/if}}">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item {{#if routeActive.createpoll}}active{{/if}}">
         <a class="nav-link" href="/createpoll">Create Poll</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item {{#if routeActive.trending}}active{{/if}}">
         <a class="nav-link" href="#">Trending</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <form class="navbar-form form-inline my-2 my-lg-0" action="#" role="search">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" id="navbarInput-01" type="search" placeholder="Search">
+          <span class="input-group-btn">
+            <button type="submit" class="btn"><span class="fui-search"></span></button>
+          </span>
+        </div>
+      </div>
     </form>
   </div>
 </nav>
