@@ -23,6 +23,11 @@ function createChart(pollID) {
         },
         options: {
             responsive: true,
+            legend: {
+                labels: {
+                    boxWidth: 20
+                }
+            }
         }
     };
 

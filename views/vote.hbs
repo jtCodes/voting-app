@@ -2,12 +2,16 @@
     {{>navbar}}
 </div>
 
-<h1 class="heading">Vote</h1>
-<div class="container">
+<div class="vote-poll-wrap">
     <form method="POST" action="/api/vote/post">
-        <div class="poll">
+        <div class="vote-poll-title-insert">
             
         </div>
-        <button type="submit" class="btn btn-outline-primary" id="btn">Submit</button>
+        <div class="vote-poll-options">
+            <div class="vote-poll-options-insert">
+
+            </div>
+            <button type="submit" class="btn btn-primary vote-submit-btn" id="btn">Submit</button>
+        </div>
     </form>
 </div>

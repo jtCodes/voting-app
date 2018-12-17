@@ -62,7 +62,7 @@ function deleteLastOptionBox(name) {
 }
 
 function addImg() {
-  var imgHtml = '<img src="https://i.kym-cdn.com/photos/images/original/001/385/566/974.png" alt="example-image" class="img-rounded img-responsive poll-image">';
+  var imgHtml = '<img src="https://i.kym-cdn.com/photos/images/original/001/385/566/974.png" alt="example-image" class="img-rounded img-responsive poll-image" onload="alert("finished!");">';
   $(".poll-image-container").append(imgHtml);
   console.log("add imng");
 }
